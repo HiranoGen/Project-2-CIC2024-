@@ -1,0 +1,18 @@
+:root {
+  /** Layouts, we are giving the common ones to oyu **/
+  --layout-mobile: 375px;
+  --layout-desktop: 1440px;
+
+  /** Colours **/
+  /* place your colours here */
+  --clr-white: hsl(0, 0%, 100%); /* examples */
+
+
+  /** Typography **/
+  
+  /* Font sizes */
+
+  /* Font weights */
+
+  /* Font family */
+}
