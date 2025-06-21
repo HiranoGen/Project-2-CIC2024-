@@ -46,3 +46,110 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /** Your CSS goes below this line **/
+
+
+        /* 1. Cohesive Color Palette & Typography using Plain CSS */
+        :root {
+            --bg-dark: #0D1117;
+            --bg-light: #1D1C3B;
+            --primary-cyan: #08E2FF;
+            --primary-magenta: #F022A8;
+            --text-light: #E6F1FF;
+            --text-dark: #a9a9a9;
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+            color: var(--text-light);
+        }
+
+        .header-title {
+            font-family: var(--font-heading);
+            color: var(--primary-cyan);
+            text-shadow: 0 0 5px var(--primary-cyan), 0 0 10px var(--primary-cyan), 0 0 20px var(--primary-magenta);
+        }
+
+        .screen, .container-box {
+            background-color: rgba(13, 17, 23, 0.5);
+            border: 1px solid var(--primary-magenta);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(240, 34, 168, 0.3);
+        }
+
+        /* 2. Hover Effects & Stylish Buttons */
+        .btn {
+            font-family: var(--font-body);
+            font-weight: 700;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px, inset 0 0 5px;
+        }
+
+        .btn-cyan {
+            color: var(--primary-cyan);
+            border-color: var(--primary-cyan);
+        }
+        .btn-cyan:hover {
+            background-color: var(--primary-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--primary-cyan), inset 0 0 10px var(--primary-cyan);
+            transform: scale(1.05) translateY(-2px);
+        }
+        
+        .btn-magenta {
+            color: var(--primary-magenta);
+            border-color: var(--primary-magenta);
+        }
+        .btn-magenta:hover {
+            background-color: var(--primary-magenta);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--primary-magenta), inset 0 0 10px var(--primary-magenta);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .choice-btn {
+             transition: all 0.3s ease;
+        }
+        .choice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px currentColor;
+        }
+        .rock:hover { color: #ffb86c; }
+        .paper:hover { color: #8be9fd; }
+        .scissors:hover { color: #ff79c6; }
+
+        .choice-display {
+            border: 2px dashed var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        .choice-display.revealed {
+            border-style: solid;
+            transform: scale(1.05);
+        }
+        .player-choice-revealed { border-color: var(--primary-cyan); }
+        .computer-choice-revealed { border-color: var(--primary-magenta); }
+        
+        /* 3. Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .screen {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .rules-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            background-color: rgba(13, 17, 23, 0.7);
+            border-radius: 0.5rem;
+        }
+        .rules-container.show {
+            max-height: 500px;
+            padding: 1.5rem;
+            border: 1px solid var(--primary-cyan);
+        }

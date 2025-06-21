@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS NEON</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* 1. Cohesive Color Palette & Typography using Plain CSS */
+        :root {
+            --bg-dark: #0D1117;
+            --bg-light: #1D1C3B;
+            --primary-cyan: #08E2FF;
+            --primary-magenta: #F022A8;
+            --text-light: #E6F1FF;
+            --text-dark: #a9a9a9;
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+            color: var(--text-light);
+        }
+
+        .header-title {
+            font-family: var(--font-heading);
+            color: var(--primary-cyan);
+            text-shadow: 0 0 5px var(--primary-cyan), 0 0 10px var(--primary-cyan), 0 0 20px var(--primary-magenta);
+        }
+
+        .screen, .container-box {
+            background-color: rgba(13, 17, 23, 0.5);
+            border: 1px solid var(--primary-magenta);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(240, 34, 168, 0.3);
+        }
+
+        /* 2. Hover Effects & Stylish Buttons */
+        .btn {
+            font-family: var(--font-body);
+            font-weight: 700;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px, inset 0 0 5px;
+        }
+
+        .btn-cyan {
+            color: var(--primary-cyan);
+            border-color: var(--primary-cyan);
+        }
+        .btn-cyan:hover {
+            background-color: var(--primary-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--primary-cyan), inset 0 0 10px var(--primary-cyan);
+            transform: scale(1.05) translateY(-2px);
+        }
+        
+        .btn-magenta {
+            color: var(--primary-magenta);
+            border-color: var(--primary-magenta);
+        }
+        .btn-magenta:hover {
+            background-color: var(--primary-magenta);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--primary-magenta), inset 0 0 10px var(--primary-magenta);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .choice-btn {
+             transition: all 0.3s ease;
+        }
+        .choice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px currentColor;
+        }
+        .rock:hover { color: #ffb86c; }
+        .paper:hover { color: #8be9fd; }
+        .scissors:hover { color: #ff79c6; }
+
+        .choice-display {
+            border: 2px dashed var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        .choice-display.revealed {
+            border-style: solid;
+            transform: scale(1.05);
+        }
+        .player-choice-revealed { border-color: var(--primary-cyan); }
+        .computer-choice-revealed { border-color: var(--primary-magenta); }
+        
+        /* 3. Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .screen {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .rules-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            background-color: rgba(13, 17, 23, 0.7);
+            border-radius: 0.5rem;
+        }
+        .rules-container.show {
+            max-height: 500px;
+            padding: 1.5rem;
+            border: 1px solid var(--primary-cyan);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center min-h-screen p-4">
+
+    <header class="text-center py-6 mb-8 w-full">
+        <h1 class="header-title text-4xl md:text-5xl">RPS NEON</h1>
+    </header>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen w-full max-w-md p-6 md:p-8 rounded-lg text-center">
+        <h2 class="font-bold text-3xl text-white mb-6">Welcome, Challenger!</h2>
+        <p class="text-slate-300 mb-8">First to win 2 rounds is the champion. Good luck.</p>
+        <button id="start-button" class="btn btn-cyan font-bold py-3 px-8 rounded-lg text-xl w-full">
+            Start Game
+        </button>
+        <div class="w-full mt-6">
+            <button id="toggle-rules-btn" class="btn btn-magenta text-sm py-2 px-4 rounded-lg w-full">Show Rules</button>
+            <div id="rules-container" class="rules-container mt-4 text-left">
+                <h3 class="text-xl font-bold mb-3 text-white">Rules</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-200">
+                    <li><strong class="text-cyan-300">Rock</strong> wins against <strong class="text-fuchsia-400">Scissors</strong>.</li>
+                    <li><strong class="text-fuchsia-400">Scissors</strong> wins against <strong class="text-blue-300">Paper</strong>.</li>
+                    <li><strong class="text-blue-300">Paper</strong> wins against <strong class="text-cyan-300">Rock</strong>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen w-full max-w-md p-6 md:p-8 rounded-lg hidden">
+        <div class="text-center mb-6">
+            <h2 id="round-counter" class="text-3xl font-bold text-white">Round 1</h2>
+        </div>
+        <p class="text-lg text-slate-300 mt-2 text-center mb-6">Choose your weapon!</p>
+        <!-- 4. Clean & Structured Layout using Flexbox -->
+        <div class="flex justify-around items-center mb-8 text-5xl text-slate-500">
+            <button class="choice-btn rock" data-choice="Rock">✊</button>
+            <button class="choice-btn paper" data-choice="Paper">✋</button>
+            <button class="choice-btn scissors" data-choice="Scissors">✌️</button>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+            <div>
+                <h3 class="text-xl font-semibold mb-2 text-slate-300">YOU</h3>
+                <div id="player-choice" class="choice-display text-4xl p-4 rounded-lg min-h-[90px] flex items-center justify-center">?</div>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-2 text-slate-300">CPU</h3>
+                <div id="computer-choice" class="choice-display text-4xl p-4 rounded-lg min-h-[90px] flex items-center justify-center">?</div>
+            </div>
+        </div>
+        <div class="text-center mb-6 min-h-[48px]">
+            <p id="round-result" class="text-2xl font-bold text-white"></p>
+        </div>
+        <div class="text-center border-t border-slate-700 pt-4">
+            <h3 class="text-xl font-semibold mb-2 text-slate-300">Total Score</h3>
+            <div class="flex justify-around text-lg">
+                <p class="text-cyan-300">Player: <span id="player-score" class="font-bold">0</span></p>
+                <p class="text-magenta-400">Computer: <span id="computer-score" class="font-bold">0</span></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- End Screen -->
+    <div id="end-screen" class="screen w-full max-w-md p-6 md:p-8 rounded-lg hidden text-center">
+        <h2 id="final-result-message" class="text-4xl font-bold mb-4"></h2>
+        <p id="final-score-display" class="text-slate-300 text-xl mb-8"></p>
+        <button id="replay-button" class="btn btn-cyan font-bold py-3 px-8 rounded-lg text-xl w-full">
+            Replay
+        </button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Gen Hirano/Game Studio</p>
+    </footer>
+
+    <script>
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const endScreen = document.getElementById('end-screen');
+        const startButton = document.getElementById('start-button');
+        const choiceButtons = document.querySelectorAll('.choice-btn');
+        const replayButton = document.getElementById('replay-button');
+        const roundCounterDisplay = document.getElementById('round-counter');
+        const playerChoiceDisplay = document.getElementById('player-choice');
+        const computerChoiceDisplay = document.getElementById('computer-choice');
+        const roundResultDisplay = document.getElementById('round-result');
+        const playerScoreDisplay = document.getElementById('player-score');
+        const computerScoreDisplay = document.getElementById('computer-score');
+        const finalResultMessage = document.getElementById('final-result-message');
+        const finalScoreDisplay = document.getElementById('final-score-display');
+        const toggleRulesBtn = document.getElementById('toggle-rules-btn');
+        const rulesContainer = document.getElementById('rules-container');
+        
+        const choices = {
+            Rock: "✊",
+            Paper: "✋",
+            Scissors: "✌️"
+        };
+        const choiceNames = Object.keys(choices);
+        const maxRounds = 3;
+        let currentRound = 0;
+        let playerScore = 0;
+        let computerScore = 0;
+        
+        startButton.addEventListener('click', startGame);
+        replayButton.addEventListener('click', startGame);
+        choiceButtons.forEach(button => {
+            button.addEventListener('click', (e) => playRound(e.target.dataset.choice));
+        });
+        toggleRulesBtn.addEventListener('click', () => {
+            rulesContainer.classList.toggle('show');
+            toggleRulesBtn.textContent = rulesContainer.classList.contains('show') ? 'Hide Rules' : 'Show Rules';
+        });
+
+        function startGame() {
+            currentRound = 1;
+            playerScore = 0;
+            computerScore = 0;
+            updateScoreboard();
+            resetRoundUI('Round 1');
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+        }
+
+        function playRound(playerChoice) {
+            choiceButtons.forEach(b => b.disabled = true); // Disable buttons during round animation
+
+            const computerChoice = choiceNames[Math.floor(Math.random() * choiceNames.length)];
+            
+            playerChoiceDisplay.textContent = choices[playerChoice];
+            playerChoiceDisplay.classList.add('revealed', 'player-choice-revealed');
+
+            setTimeout(() => {
+                computerChoiceDisplay.textContent = choices[computerChoice];
+                computerChoiceDisplay.classList.add('revealed', 'computer-choice-revealed');
+                
+                let resultText = '';
+                if (playerChoice === computerChoice) {
+                    resultText = "It's a Draw!";
+                } else if ((playerChoice === 'Rock' && computerChoice === 'Scissors') || (playerChoice === 'Paper' && computerChoice === 'Rock') || (playerChoice === 'Scissors' && computerChoice === 'Paper')) {
+                    resultText = 'You Win This Round!';
+                    playerScore++;
+                } else {
+                    resultText = 'Computer Wins!';
+                    computerScore++;
+                }
+                roundResultDisplay.textContent = resultText;
+                updateScoreboard();
+
+                if (currentRound >= maxRounds) {
+                    setTimeout(endGame, 2000);
+                } else {
+                    currentRound++;
+                    setTimeout(() => resetRoundUI(`Round ${currentRound}`), 2000);
+                }
+            }, 1000);
+        }
+
+        function resetRoundUI(roundText) {
+            roundCounterDisplay.textContent = roundText;
+            playerChoiceDisplay.textContent = '?';
+            computerChoiceDisplay.textContent = '?';
+            roundResultDisplay.textContent = '';
+            playerChoiceDisplay.classList.remove('revealed', 'player-choice-revealed');
+            computerChoiceDisplay.classList.remove('revealed', 'computer-choice-revealed');
+            choiceButtons.forEach(b => b.disabled = false);
+        }
+        
+        function updateScoreboard() {
+            playerScoreDisplay.textContent = playerScore;
+            computerScoreDisplay.textContent = computerScore;
+        }
+
+        function endGame() {
+            if (playerScore > computerScore) {
+                finalResultMessage.textContent = '🎉YOU WON THE GAME!🎉😆';
+                finalResultMessage.style.color = 'var(--primary-cyan)';
+            } else if (computerScore > playerScore) {
+                finalResultMessage.textContent = 'GAME OVER';
+                finalResultMessage.style.color = 'var(--primary-magenta)';
+            } else {
+                finalResultMessage.textContent = 'IT\'S A TIE!';
+                finalResultMessage.style.color = 'var(--text-light)';
+            }
+            finalScoreDisplay.textContent = `Final Score: You ${playerScore} - ${computerScore} CPU`;
+            gameScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
