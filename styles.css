@@ -46,110 +46,266 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /** Your CSS goes below this line **/
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수직 중앙 정렬 */
+  align-items: center;   /* 수평 중앙 정렬 */
+  min-height: 100vh;
+  padding: 1rem;
+  margin: 0;
+}
 
+.app-wrapper {
+  width: 100%;
+  max-width: 28rem;
+  display: flex; /* Flexbox 추가 */
+  flex-direction: column; /* 세로 방향 정렬 */
+  align-items: center; /* 자식 요소 수평 중앙 정렬 */
+}
 
-        /* 1. Cohesive Color Palette & Typography using Plain CSS */
-        :root {
-            --bg-dark: #0D1117;
-            --bg-light: #1D1C3B;
-            --primary-cyan: #08E2FF;
-            --primary-magenta: #F022A8;
-            --text-light: #E6F1FF;
-            --text-dark: #a9a9a9;
-            --font-heading: 'Press Start 2P', cursive;
-            --font-body: 'Inter', sans-serif;
-        }
+.main-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
 
-        body {
-            font-family: var(--font-body);
-            background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
-            color: var(--text-light);
-        }
+.header-title {
+  font-family: var(--font-heading);
+  color: var(--primary-cyan);
+  font-size: 3.5rem; /* 타이틀 폰트 크기 증가 */
+  text-shadow: 0 0 5px var(--primary-cyan), 0 0 10px var(--primary-cyan), 0 0 20px var(--primary-magenta);
+}
 
-        .header-title {
-            font-family: var(--font-heading);
-            color: var(--primary-cyan);
-            text-shadow: 0 0 5px var(--primary-cyan), 0 0 10px var(--primary-cyan), 0 0 20px var(--primary-magenta);
-        }
+main.main-content {
+  width: 100%;
+}
 
-        .screen, .container-box {
-            background-color: rgba(13, 17, 23, 0.5);
-            border: 1px solid var(--primary-magenta);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 15px rgba(240, 34, 168, 0.3);
-        }
+/* --- Screen Styling --- */
+.screen {
+  background-color: rgba(13, 17, 23, 0.5);
+  border: 1px solid var(--primary-magenta);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 15px rgba(240, 34, 168, 0.3);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  width: 100%;
+  animation: fadeIn 0.6s ease-out;
+}
 
-        /* 2. Hover Effects & Stylish Buttons */
-        .btn {
-            font-family: var(--font-body);
-            font-weight: 700;
-            border: 2px solid;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px, inset 0 0 5px;
-        }
+.screen.hidden {
+  display: none;
+}
 
-        .btn-cyan {
-            color: var(--primary-cyan);
-            border-color: var(--primary-cyan);
-        }
-        .btn-cyan:hover {
-            background-color: var(--primary-cyan);
-            color: var(--bg-dark);
-            box-shadow: 0 0 15px var(--primary-cyan), inset 0 0 10px var(--primary-cyan);
-            transform: scale(1.05) translateY(-2px);
-        }
-        
-        .btn-magenta {
-            color: var(--primary-magenta);
-            border-color: var(--primary-magenta);
-        }
-        .btn-magenta:hover {
-            background-color: var(--primary-magenta);
-            color: var(--bg-dark);
-            box-shadow: 0 0 15px var(--primary-magenta), inset 0 0 10px var(--primary-magenta);
-            transform: scale(1.05) translateY(-2px);
-        }
+.screen-title {
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
 
-        .choice-btn {
-             transition: all 0.3s ease;
-        }
-        .choice-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px currentColor;
-        }
-        .rock:hover { color: #ffb86c; }
-        .paper:hover { color: #8be9fd; }
-        .scissors:hover { color: #ff79c6; }
+.screen-subtitle {
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+}
 
-        .choice-display {
-            border: 2px dashed var(--text-dark);
-            transition: all 0.3s ease;
-        }
-        .choice-display.revealed {
-            border-style: solid;
-            transform: scale(1.05);
-        }
-        .player-choice-revealed { border-color: var(--primary-cyan); }
-        .computer-choice-revealed { border-color: var(--primary-magenta); }
-        
-        /* 3. Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .screen {
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        .rules-container {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
-            background-color: rgba(13, 17, 23, 0.7);
-            border-radius: 0.5rem;
-        }
-        .rules-container.show {
-            max-height: 500px;
-            padding: 1.5rem;
-            border: 1px solid var(--primary-cyan);
-        }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Buttons --- */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.25rem;
+  border: 2px solid;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px, inset 0 0 5px;
+  width: 100%;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-cyan {
+  color: var(--primary-cyan);
+  border-color: var(--primary-cyan);
+}
+.btn-cyan:hover {
+  background-color: var(--primary-cyan);
+  color: var(--bg-dark);
+  box-shadow: 0 0 15px var(--primary-cyan), inset 0 0 10px var(--primary-cyan);
+  transform: scale(1.05) translateY(-2px);
+}
+
+.btn-magenta {
+  color: var(--primary-magenta);
+  border-color: var(--primary-magenta);
+}
+.btn-magenta:hover {
+  background-color: var(--primary-magenta);
+  color: var(--bg-dark);
+  box-shadow: 0 0 15px var(--primary-magenta), inset 0 0 10px var(--primary-magenta);
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* --- Game Specific Elements --- */
+.choice-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  color: var(--text-dark);
+}
+
+.choice-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+.choice-btn:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 15px currentColor;
+}
+.choice-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.rock:hover { color: #ffb86c; }
+.paper:hover { color: #8be9fd; }
+.scissors:hover { color: #ff79c6; }
+
+.result-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.choice-box {
+  text-align: center;
+}
+
+.choice-box h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.choice-display {
+  border: 2px dashed var(--text-dark);
+  font-size: 2.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.choice-display.revealed {
+  border-style: solid;
+  transform: scale(1.05);
+}
+#player-choice.revealed { border-color: var(--primary-cyan); }
+#computer-choice.revealed { border-color: var(--primary-magenta); }
+
+.round-result-box {
+  min-height: 48px;
+  margin-bottom: 1.5rem;
+}
+.round-result-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.total-score-box {
+  border-top: 1px solid #334155;
+  padding-top: 1rem;
+  text-align: center;
+}
+.total-score-box h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.score-display {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.125rem;
+}
+.player-score-text { color: var(--primary-cyan); }
+.computer-score-text { color: var(--primary-magenta); }
+
+/* --- Rules Section --- */
+.rules-section {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+#rules-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+  background-color: rgba(13, 17, 23, 0.7);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+#rules-container.show {
+  max-height: 500px;
+  padding: 1.5rem;
+  border: 1px solid var(--primary-cyan);
+}
+
+.rules-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.rules-list {
+  list-style-position: inside;
+  list-style-type: disc;
+}
+.rules-list li {
+  margin-bottom: 0.5rem;
+}
+.rules-list strong { font-weight: 700; }
+.rules-list li:nth-child(1) strong { color: #ffb86c; }
+.rules-list li:nth-child(2) strong { color: #ff79c6; }
+.rules-list li:nth-child(3) strong { color: #8be9fd; }
+
+/* --- Footer --- */
+.main-footer-credit {
+  margin-top: 2rem;
+  color: var(--text-dark);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Responsive Media Query */
+@media (max-width: 480px) {
+  .header-title {
+      font-size: 2.5rem; /* 모바일 화면 타이틀 크기 조정 */
+  }
+}

@@ -1,23 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- You will add your font imports here -->
-   <link rel="stylesheet" href="./styles.css">
-  <title> Minigames Website - Rock Paper Scissors Mayhem </title>
-  <link href="https://fonts.googleapis.com/css2?family=YourChosenFont&family=AnotherFont&display=swap" rel="stylesheet">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- You will add your font imports here -->
+    <title>RPS NEON</title>
+    <link rel="stylesheet" href="variables.css" />
+    <link rel="stylesheet" href="styles.css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
+  <body>
+    <!-- You will add your semantic HTML below this line -->
 
-<body>
-  <!-- You will add your semantic HTML below this line -->
+    <div class="app-wrapper">
+      <header class="main-header">
+        <h1 class="header-title">RPS NEON</h1>
+      </header>
 
+      <main class="main-content">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen">
+          <h2 class="screen-title">Welcome, Challenger!</h2>
+          <p class="screen-subtitle">
+            First to win 2 rounds is the champion. Good luck.
+          </p>
+          <button id="start-button" class="btn btn-cyan">Start Game</button>
+          <div class="rules-section">
+            <button id="toggle-rules-btn" class="btn btn-magenta btn-small">
+              Show Rules
+            </button>
+            <div id="rules-container">
+              <h3 class="rules-title">Rules</h3>
+              <ul class="rules-list">
+                <li>
+                  <strong>Rock</strong> wins against <strong>Scissors</strong>.
+                </li>
+                <li>
+                  <strong>Scissors</strong> wins against <strong>Paper</strong>.
+                </li>
+                <li>
+                  <strong>Paper</strong> wins against <strong>Rock</strong>.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-  <!-- You will add your semantic HTML above this line -->
-  <script src="./script.js"></script>
-</body>
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen hidden">
+          <h2 id="round-counter" class="screen-title">Round 1</h2>
+          <p class="screen-subtitle">Choose your weapon!</p>
+          <div class="choice-area">
+            <button class="choice-btn rock" data-choice="Rock">✊</button>
+            <button class="choice-btn paper" data-choice="Paper">✋</button>
+            <button class="choice-btn scissors" data-choice="Scissors">
+              ✌️
+            </button>
+          </div>
+          <div class="result-area">
+            <div class="choice-box">
+              <h3>YOU</h3>
+              <div id="player-choice" class="choice-display">?</div>
+            </div>
+            <div class="choice-box">
+              <h3>CPU</h3>
+              <div id="computer-choice" class="choice-display">?</div>
+            </div>
+          </div>
+          <div class="round-result-box">
+            <p id="round-result" class="round-result-text"></p>
+          </div>
+          <div class="total-score-box">
+            <h3>Total Score</h3>
+            <div class="score-display">
+              <p class="player-score-text">
+                Player: <span id="player-score">0</span>
+              </p>
+              <p class="computer-score-text">
+                Computer: <span id="computer-score">0</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="end-screen" class="screen hidden">
+          <h2 id="final-result-message" class="screen-title"></h2>
+          <p id="final-score-display" class="screen-subtitle"></p>
+          <button id="replay-button" class="btn btn-cyan">Replay</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- 저작권 문구 추가 -->
+    <footer class="main-footer-credit">
+      <p>© 2025 Gen Hirano/Game Studio</p>
+    </footer>
+
+    <!-- You will add your semantic HTML above this line -->
+    <script src="./script.js"></script>
+  </body>
 </html>
-
-
